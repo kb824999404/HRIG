@@ -83,3 +83,5 @@
    * `cd rain-streaks-rendering && bash lightingStreaks.sh`
 7. Modify the `${dataRoot}` in the scripts `rain-streaks-rendering/composite.sh` , and run it to composite rain layer and background image
    * `cd rain-streaks-rendering && bash composite.sh`
+8. Modify the `${dataRoot}` and `${resultRoot}` in the scripts `scripts/createDataset.sh` , and run it to create the dataset
+   * `cd scripts && bash createDataset.sh`
