@@ -1,0 +1,134 @@
+model:
+  base_learning_rate: 2.0e-06
+  target: hrig.models.hrig.HRIGDiffusion
+  params:
+    linear_start: 0.0015
+    linear_end: 0.0195
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    first_stage_key: image_gt_0
+    low_first_stage_key: image_gt_1
+    low_cond_stage_key: image_1
+    low_mask_key: mask_1
+    image_size: 32
+    channels: 3
+    monitor: val/loss_simple_ema
+    cond_stage_trainable: false
+    conditioning_key: concat
+
+    # asseet
+    asset_learning_rate: 3.24e-06
+
+    transformer_config:
+      target: asset.modules.transformer.asset.ASSET
+      params:
+        vocab_size: 512
+        d_model: 512
+        max_position_embeddings: 128
+        attention_dropout: 0.0
+        dropout: 0.0
+        encoder_layers: 3
+        decoder_layers: 7
+        encoder_ffn_dim: 1024
+        decoder_ffn_dim: 1024
+        PEG_list: ['E_all', 'D_0']
+        PEG_ks: 5
+        block_h: 16
+        block_w: 4
+    unet_config:
+      target: ldm.modules.diffusionmodules.openaimodel.UNetModel
+      params:
+        image_size: 32
+        in_channels: 6
+        out_channels: 3
+        model_channels: 192
+        attention_resolutions:
+        # note: this isn\t actually the resolution but
+        # the downsampling factor, i.e. this corresnponds to
+        # attention on spatial resolution 8,16,32, as the
+        # spatial reolution of the latents is 64 for f4
+        - 8
+        - 4
+        - 2
+        num_res_blocks: 2
+        channel_mult:
+        - 1
+        - 2
+        - 3
+        - 4
+        num_head_channels: 32
+    first_stage_config:
+      target: ldm.models.autoencoder.VQModelInterface
+      params:
+        embed_dim: 3
+        n_embed: 512
+        ddconfig:
+          double_z: false
+          z_channels: 256
+          resolution: 512
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 1
+          - 2
+          - 2
+          - 4
+          num_res_blocks: 2
+          attn_resolutions: []
+          dropout: 0.0
+        lossconfig:
+          target: torch.nn.Identity
+    low_first_stage_config:
+      target: asset.models.vqgan.VQModel
+      params:
+        embed_dim: 3
+        n_embed: 512
+        ddconfig:
+          double_z: false
+          z_channels: 256
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult: [ 1,1,2,4]  # num_down = len(ch_mult)-1
+          num_res_blocks: 2
+          attn_resolutions: [32]
+          dropout: 0.0
+        lossconfig:
+          target: torch.nn.Identity
+    low_cond_stage_config: __is_first_stage__
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 1
+    num_workers: 8
+    # wrap: false
+    train:
+      target: hrig.data.rain.RainBaseList
+      params:
+        data_root: /home/zhoukaibin/data/lane_old/images
+        json_file: /home/zhoukaibin/data/lane_old/trainset.json
+        size: [512, 256]
+    validation:
+      target: hrig.data.rain.RainBaseList
+      params:
+        data_root: /home/zhoukaibin/data/lane_old/images
+        json_file: /home/zhoukaibin/data/lane_old/testset.json
+        size: [512, 256]
+
+
+lightning:
+  callbacks:
+    image_logger:
+      target: main.ImageLogger
+      params:
+        batch_frequency: 1000
+        max_images: 8
+        increase_log_steps: False
+
+  trainer:
+    benchmark: True

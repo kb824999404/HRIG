@@ -1,0 +1,1 @@
+python test.py -c configs/ldm_blender/blender-ldm-masked-hw512-concat-unet128-em3.yaml

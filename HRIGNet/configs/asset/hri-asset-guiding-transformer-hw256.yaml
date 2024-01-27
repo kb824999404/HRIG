@@ -1,0 +1,80 @@
+model:
+  base_learning_rate: 4.5e-07
+  target: asset.models.cond_transformer.Net2NetTransformer
+  params:
+    first_stage_key: image_gt
+    cond_stage_key: image
+    transformer_config:
+      target: asset.modules.transformer.asset.ASSET
+      params:
+        vocab_size: 1024
+        max_position_embeddings: 256
+        attention_dropout: 0.0
+        dropout: 0.0
+        encoder_layers: 7
+        decoder_layers: 15
+        PEG_list: ['E_all', 'D_0']
+        PEG_ks: 5
+        block_h: 16
+        block_w: 4
+    first_stage_config:
+      target: asset.models.vqgan.VQModel
+      params:
+        ckpt_path: logs/2023-02-21T17-19-01_rain_vqgan/checkpoints/last.ckpt
+        embed_dim: 256
+        n_embed: 1024
+        legacy: True
+        ddconfig:
+          double_z: false
+          z_channels: 256
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult: [ 1,1,2,2,4]  # num_down = len(ch_mult)-1
+          num_res_blocks: 2
+          attn_resolutions: [16]
+          dropout: 0.0
+          conv_type: PartialConv
+          downsample_legacy: False
+          norm_type: RegionNorm
+        lossconfig:
+          target: asset.modules.losses.DummyLoss
+    cond_stage_config:
+      target: asset.models.vqgan.VQModel
+      params:
+        ckpt_path: logs/2023-02-22T09-45-52_rain_vqgan_cond/checkpoints/last.ckpt
+        embed_dim: 256
+        n_embed: 1024
+        legacy: True
+        ddconfig:
+          double_z: false
+          z_channels: 256
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult: [ 1,1,2,2,4]  # num_down = len(ch_mult)-1
+          num_res_blocks: 2
+          attn_resolutions: [16]
+          dropout: 0.0
+        lossconfig:
+          target: asset.modules.losses.DummyLoss
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 4
+    num_workers: 8
+    train:
+      target: hrig.data.rain.RainBase
+      params:
+        data_root: /home/zhoukaibin/data/dataset/hri
+        json_file: /home/zhoukaibin/data/dataset/hri/trainset.json
+        size: 256
+    validation:
+      target: hrig.data.rain.RainBase
+      params:
+        data_root: /home/zhoukaibin/data/dataset/hri
+        json_file: /home/zhoukaibin/data/dataset/hri/testset.json
+        size: 256

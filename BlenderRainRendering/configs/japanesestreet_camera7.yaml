@@ -1,0 +1,8 @@
+config:
+  quantity: 7500
+  cloud_position: [0,0,32]
+  cloud_size: [66,10]
+  time_offset: [0,5]
+  time_period: 11.0
+  wind_strength: 0
+  wind_orientation: [0,0,0]
