@@ -16,9 +16,9 @@ This is the website for our paper "High-resolution Rainy Image Synthesis: Learni
 
 ### Source Codes and Data
 
-* [Get the codes](https://github.com/kb824999404/HRIG)
-* [Get the HRI dataset and the Blender scene files](https://pan.baidu.com/s/14G4fE8_7lswvod6OtIbOew?pwd=v9b2  ) (Extraction Code: v9b2)
+* Get the codes: [Github](https://github.com/kb824999404/HRIG)
+* Get the HRI dataset and the Blender scene files: [Google Drive](https://drive.google.com/drive/folders/1MSS-iNaLxI05K_10pHMWYibrDJtMJngP?usp=sharing), [Baidu Cloud](https://pan.baidu.com/s/14G4fE8_7lswvod6OtIbOew?pwd=v9b2)(Extraction Code: v9b2)
 
 ---
 
-Last update: Jan. 27, 2024    
+Last update: Jan. 28, 2024    
