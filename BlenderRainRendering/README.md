@@ -68,8 +68,8 @@
 ## How To Run
 
 1. Download the blender files and the rain streak database, and put them in the `data` directory
-   * Rain streak database: [rain streak database](https://pan.baidu.com/s/14G4fE8_7lswvod6OtIbOew?pwd=v9b2)(Extraction Code: v9b2)
-   * Blender files: [Google Drive](https://drive.google.com/drive/folders/1MSS-iNaLxI05K_10pHMWYibrDJtMJngP?usp=sharing), [BaiduCloud](https://pan.baidu.com/s/14G4fE8_7lswvod6OtIbOew?pwd=v9b2)(Extraction Code: v9b2)
+   * Rain streak database: [Hugging Face](https://huggingface.co/datasets/Ian824/High-Resolution-Rainy-Image/blob/main/Rain%20streak%20database/rain-streak-database.zip), [BaiduCloud](https://pan.baidu.com/s/14G4fE8_7lswvod6OtIbOew?pwd=v9b2)(Extraction Code: v9b2)
+   * Blender files: [Hugging Face](https://huggingface.co/datasets/Ian824/High-Resolution-Rainy-Image), [Google Drive](https://drive.google.com/drive/folders/1MSS-iNaLxI05K_10pHMWYibrDJtMJngP?usp=sharing), [BaiduCloud](https://pan.baidu.com/s/14G4fE8_7lswvod6OtIbOew?pwd=v9b2)(Extraction Code: v9b2)
 2. Modify the `${dataRoot}` in the scripts `data/blenderFiles/${Scene}/render.sh` and  `data/blenderFiles/${Scene}/renderDepth.sh` , and run them to render background and depth images
    * `cd data/blenderFiles/${Scene} && bash render.sh`
    * `cd data/blenderFiles/${Scene} && bash renderDepth.sh`
