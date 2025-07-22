@@ -1,6 +1,6 @@
-# High-resolution Rainy Image Synthesis: Learning from Rendering
+# Learning from Rendering: Realistic and Controllable Extreme Rainy Image Synthesis for Autonomous Driving Simulation
 
-This is the codes for our paper "High-resolution Rainy Image Synthesis: Learning from Rendering".
+This is the repositories of the Learning-from-Rendering rainy image synthesizer in our paper "Learning from Rendering: Realistic and Controllable Extreme Rainy Image Synthesis for Autonomous Driving Simulation".
 
 * Preprint Paper：https://arxiv.org/abs/2502.16421
 * The codes of the rendering stage is in [BlenderRainRendering](./BlenderRainRendering).
