@@ -2,6 +2,7 @@
 
 This is the repositories of the Learning-from-Rendering rainy image synthesizer in our paper "Learning from Rendering: Realistic and Controllable Extreme Rainy Image Synthesis for Autonomous Driving Simulation".
 
+* Paper: https://dl.acm.org/doi/10.1145/3820051
 * Preprint Paper：https://arxiv.org/abs/2502.16421
 * The codes of the rendering stage is in [BlenderRainRendering](./BlenderRainRendering).
 * The codes of the learning stage is in [HRIGNet](./HRIGNet).
